@@ -1,4 +1,4 @@
-var userFactory = function(name, username) {
+function userFactory(name, username) {
   var user = {}; //creating a new temporary object
   //Create class properties
   user.name = name;
@@ -6,3 +6,5 @@ var userFactory = function(name, username) {
 
   return user;
 };
+
+module.exports = userFactory;

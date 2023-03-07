@@ -2,10 +2,10 @@
 const userRepository = require('../repositories/users.repository');
 
 
-async function create(user){
+function create(user){
   const result = userRepository.create(user);
 
-  return {result};
+  return result;
 }
 
 

@@ -1,11 +1,7 @@
 const user = require('../services/users.service');
 const userFactory = require('../services/factory/user.factory');
-import {
-	ReasonPhrases,
-	StatusCodes,
-	getReasonPhrase,
-	getStatusCode,
-} from 'http-status-codes';
+const httpStatusCode = require('http-status-codes');
+const { response } = require('express');
 
 // async function get(req, res, next) {
 //   try {
@@ -19,8 +15,9 @@ import {
 async function create(req, res, next) {
   try {
     userModelService = userFactory(req.body.name, req.body.username);
-    res = await user.create(userModelService);
-    response.status(getStatusCode(res)).send({error: res});
+    creationStatus = user.create(userModelService);
+    console.log(creationStatus);
+    res.status(res.status(httpStatusCode[creationStatus.value]).json({ message: creationStatus.message }));
   } catch (err) {
     console.error(`Error while creating programming language`, err.message);
     next(err);
@@ -46,8 +43,7 @@ async function create(req, res, next) {
 // }
 
 module.exports = {
-  get,
+
   create,
-  update,
-  remove
+
 };

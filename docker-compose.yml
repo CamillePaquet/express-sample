@@ -16,4 +16,5 @@ services:
     environment:
       MONGODB_URI: mongodb://user:password@db:27017/express-sample
     volumes:
-      - .:/usr
+      - .:/usr/src/app
+      - /usr/src/app/node_modules

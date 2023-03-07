@@ -1,13 +1,29 @@
 
 const helper = require('../utils/helper.util');
-const config = require('../configs/general.config');
-const Animal = mongoose.model('User', userSchema);
+const userModel = require('../models/user');
 
+const mongoose = require('mongoose');
 
-async function create(user){
-  const result = new User({ name: user.name, username: user.username });
+const User = mongoose.model('User', userModel.userSchema);
 
-  return {result};
+function create(user) {
+  const userRepo = new userModel({ name: user.name, username: user.username });
+  const result = {
+    value: "",
+    message: ""
+  };
+  try {
+    userRepo.save();
+    console.log('User created successfully');
+    result.value = "CREATED";
+    result.message = "User created successfully";
+  } catch (error) {
+    console.error(error);
+    result.value = "ERROR";
+    result.message = "Error creating user";
+  }
+  console.log(result);
+  return result;
 }
 
 
