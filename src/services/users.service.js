@@ -14,8 +14,8 @@ function login(user){
   return result;
 }
 
-function profil(user){
-  const result = userRepository.login(user);
+function profil(id){
+  const result = userRepository.profil(id);
 
   return result;
 }

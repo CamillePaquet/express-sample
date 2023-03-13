@@ -24,19 +24,19 @@ function create(user) {
   return result;
 }
 
-function login(user) {
+async function login(user) {
   const result = {
     value: "",
     message: ""
   };
   try {
     const query = userModel.where({ username: user.username, password: user.password });
-    const userRepo = query.findOne();
+    const userRepo = await query.findOne();
+
     if (!userRepo) { 
       result.value = "NOT_FOUND";
       result.message = "Error. Wrong login or password";
     } else {
-      console.log(process.env.SECRET);
       const token = jwt.sign({
         id: userRepo.id,
         username: userRepo.username
@@ -46,7 +46,32 @@ function login(user) {
       result.message = { access_token: token }
     }
   } catch (error) {
-    console.log(error);
+    result.value = "INTERNAL_SERVER_ERROR";
+    result.message = `Error creating user: ${error.message}`;
+  }
+  return result;
+}
+
+async function profil(id) {
+  const result = {
+    value: "",
+    message: ""
+  };
+  try {
+    console.log(id)
+    const query = userModel.where({ id: id });
+    const userRepo = await query.findOne();
+    console.log(userRepo)
+
+    if (!userRepo) { 
+      result.value = "NOT_FOUND";
+      result.message = "Error. Wrong login or password";
+    } else {
+      
+      result.value = "OK";
+      result.message = { access_token: token }
+    }
+  } catch (error) {
     result.value = "INTERNAL_SERVER_ERROR";
     result.message = `Error creating user: ${error.message}`;
   }
@@ -57,5 +82,6 @@ function login(user) {
 
 module.exports = {
   create,
-  login
+  login,
+  profil
 }

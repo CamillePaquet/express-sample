@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+const UserModel = require('../models/user');
 /* Récupération du header bearer */
 const extractBearerToken = headerValue => {
     if (typeof headerValue !== 'string') {
@@ -19,7 +21,7 @@ const checkTokenMiddleware = (req, res, next) => {
     }
 
     // Véracité du token
-    jwt.verify(token, SECRET, (err, decodedToken) => {
+    jwt.verify(token, process.env.SECRET, (err, decodedToken) => {
         if (err) {
             res.status(401).json({ message: 'Error. Bad token' })
         } else {
