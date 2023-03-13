@@ -8,6 +8,9 @@ const userController = require('../../controllers/user.controller');
 /* POST programming language */
 router.post('/users', userController.create);
 
+router.post('/login', userController.login);
+router.get('/profil', userController.profil);
+
 /* PUT programming language */
 // router.put('/:id', userController.update);
 
